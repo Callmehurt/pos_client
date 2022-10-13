@@ -19,7 +19,9 @@ const AdminNavbar = ({userDetail}) => {
                   <ul className="submenu megamenu">
                       <li>
                           <ul>
-                              <li><Link to={'/'}>Category</Link></li>
+                              <li><Link to={'/admin/unit-group'}>Unit Group</Link></li>
+                              <li><Link to={'/admin/units'}>Units</Link></li>
+                              <li><Link to={'/admin/product-categories'}>Product Categories</Link></li>
                           </ul>
                       </li>
                   </ul>

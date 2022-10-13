@@ -146,9 +146,7 @@ const Dropzone = (props) => {
         const images = [...props.images, ...response.data.data]
         dispatch(fetchMedias(images));
       }else {
-        console.log(response)
         notifyError(response.data.message)
-        console.log(response.data.message)
       }
     }catch (e){
       console.log(e)
