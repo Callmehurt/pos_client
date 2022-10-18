@@ -1,8 +1,8 @@
+import './lightStyle.css'
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import RequireAuth from "./components/RequireAuth";
 import {Routes, Route} from 'react-router-dom'
-
 
 import Login from "./components/Login";
 import Layout from "./components/Layout";
@@ -11,12 +11,21 @@ import StaffDashboard from './components/staff/Dashboard'
 import NotFound from "./components/NotFound";
 import PersistLogin from "./components/PersistLogin";
 import AppLayout from "./components/common/AppLayout";
-import './style.css'
 import MediaPage from "./components/admin/MediaPage";
 import Units from "./components/admin/Units";
 import UnitGroup from "./components/admin/UnitGroup";
 import Category from "./components/admin/Category";
 import CreateCategory from "./components/admin/partials/CreateCategory";
+import UpdateCategory from "./components/admin/partials/UpdateCategory";
+import Products from "./components/admin/Products";
+import CreateProduct from "./components/admin/products/CreateProduct";
+import UpdateProduct from "./components/admin/products/UpdateProduct";
+import StockManagement from "./components/admin/StockManagement";
+import StockFlowRecords from "./components/admin/StockFlowRecords";
+import Procurement from "./components/admin/procurement/Procurement";
+import Providers from "./components/admin/Providers";
+import CreateProcurement from "./components/admin/procurement/CreateProcurement";
+import ProcurementList from "./components/admin/procurement/ProcurementList";
 
 function App() {
   return (
@@ -32,11 +41,30 @@ function App() {
                 <Route element={<RequireAuth allowedRole={'admin'} />}>
                     <Route element={<AppLayout/>}>
                         <Route exact path={'/admin/dashboard'} element={<Dashboard/>} />
+
                         <Route exact path={'/admin/medias'} element={<MediaPage/>} />
+
                         <Route exact path={'/admin/unit-group'} element={<UnitGroup/>} />
+
                         <Route exact path={'/admin/units'} element={<Units/>} />
+
                         <Route exact path={'/admin/product-categories'} element={<Category/>} />
                         <Route exact path={'/admin/create-product-categories'} element={<CreateCategory/>} />
+                        <Route exact path={'/admin/update/:categoryId/category'} element={<UpdateCategory/>} />
+
+                        <Route exact path={'/admin/products'} element={<Products/>} />
+                        <Route exact path={'/admin/create-product'} element={<CreateProduct/>} />
+                        <Route exact path={'/admin/update/:productId/product'} element={<UpdateProduct/>} />
+
+                        <Route exact path={'/admin/stock-management'} element={<StockManagement/>} />
+                        <Route exact path={'/admin/stock-flow-history'} element={<StockFlowRecords/>} />
+
+
+                        <Route exact path={'/admin/providers'} element={<Providers/>} />
+
+
+                        <Route exact path={'/admin/procurements'} element={<Procurement/>} />
+                        <Route exact path={'/admin/create-procurement'} element={<CreateProcurement/>} />
                     </Route>
                 </Route>
 

@@ -7,6 +7,7 @@ import {useEffect} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUpload} from "@fortawesome/free-solid-svg-icons";
 import {faPhotoFilm} from "@fortawesome/free-solid-svg-icons";
+import {setLoadingFalse, setLoadingTrue} from "../../redux/actions/loadingAction";
 
 const MediaPage = () => {
 
@@ -17,8 +18,10 @@ const MediaPage = () => {
 
     const fetchMediaData = async () => {
         try {
+            dispatch(setLoadingTrue())
             const response = await axiosPrivate.get('/admin/fetch/all-media');
             dispatch(fetchMedias(response.data));
+            dispatch(setLoadingFalse())
             return response.data;
         }catch (e) {
             console.log(e)
@@ -29,18 +32,6 @@ const MediaPage = () => {
         fetchMediaData();
     }, [])
 
-
-    // const notify = (message) => {
-    //   toast(message, {
-    //       position: "top-center",
-    //       autoClose: 5000,
-    //       hideProgressBar: false,
-    //       closeOnClick: true,
-    //       pauseOnHover: true,
-    //       draggable: true,
-    //       progress: undefined,
-    //       });
-    // }
 
     return (
         <>

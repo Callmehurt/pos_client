@@ -1,10 +1,11 @@
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {fetchMedias} from "../../redux/actions/galleryAction";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import React from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {toast} from "react-toastify";
+import SmallLoader from "../common/SmallLoader";
 
 
 const thumbsContainer = {
@@ -59,6 +60,7 @@ const Gallery = ({images}) => {
     const dispatch = useDispatch();
     const axiosPrivate = useAxiosPrivate();
     const medias = images;
+    const isLoading = useSelector((state) => state.loading.isLoading)
 
 
     const arrayBufferToBase64 = (buffer) => {
@@ -109,7 +111,9 @@ const Gallery = ({images}) => {
 
     return (
         <>
-            <div style={thumbsContainer}>
+            {
+                isLoading ? <SmallLoader/> : (
+                    <div style={thumbsContainer}>
                 {
                     Object.keys(medias).length < 1 ? (
                         <>
@@ -133,6 +137,8 @@ const Gallery = ({images}) => {
                     )
                 }
             </div>
+                )
+            }
         </>
     )
 }

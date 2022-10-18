@@ -8,22 +8,38 @@ import {useDispatch, useSelector} from "react-redux";
 import {fetchCategories} from "../../../redux/actions/categoryAction";
 import {fetchMedias} from "../../../redux/actions/galleryAction";
 import MediaSelectionModal from "./mediaSelectionModal";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 
-const CreateCategory = () => {
+const UpdateCategory = () => {
+
+    const {categoryId} = useParams();
+    const categories = useSelector((state) => state.categories.categories)
+    const selectedCategory = categories.find((data) => data._id === categoryId);
 
     const axiosPrivate = useAxiosPrivate();
     const dispatch = useDispatch();
 
     const [mediaShow, setMediaShow] = useState(false);
-    const categories = useSelector((state) => state.categories.categories);
 
     useEffect(() => {
         fetchAllCategories();
         fetchMediaData();
     }, [])
 
+
+    useEffect(() => {
+        if(selectedCategory && categoryId){
+            setInitialValues({
+                categoryId: categoryId,
+                name: selectedCategory.name,
+                mediaId: selectedCategory.media._id,
+                parentId: selectedCategory.parent? selectedCategory.parent._id : '',
+            })
+            setPreview(selectedCategory.media.image)
+
+        }
+    }, [selectedCategory])
 
     const fetchAllCategories = async () => {
         const response = await axiosPrivate.get('/admin/fetch/categories');
@@ -42,10 +58,12 @@ const CreateCategory = () => {
 
 
     const [initialValues, setInitialValues] = useState({
-            name: '',
-            mediaId: '',
-            parentId: '',
-        });
+        categoryId: '',
+        name: '',
+        mediaId: '',
+        parentId: '',
+    });
+
     const [preview, setPreview] = useState('');
 
 
@@ -55,16 +73,9 @@ const CreateCategory = () => {
         validationSchema: categorySchema,
         onSubmit: async (values, action) => {
             try {
-                const response = await axiosPrivate.post('/admin/create/category', values);
+                const response = await axiosPrivate.put('/admin/update/category', values);
                 if(response.status === 200){
                     notifySuccess(response.data.message);
-                    // dispatch(fetchAllCategories([...categories, response.data.category]))
-                    setInitialValues({
-                    name: '',
-                    mediaId: '',
-                    parentId: '',
-                })
-                setPreview('');
                 }else {
                     notifyError(response.data.message)
                 }
@@ -91,7 +102,7 @@ const CreateCategory = () => {
               <div className="row align-items-center">
                   <div className="col-sm-12">
                       <ol className="breadcrumb float-right">
-                          <li className="breadcrumb-item active">Create Category</li>
+                          <li className="breadcrumb-item active">Update Category</li>
                       </ol>
                   </div>
               </div>
@@ -184,10 +195,9 @@ const CreateCategory = () => {
                                     <button type="submit" className="btn btn-primary waves-effect waves-light">
                                         Submit
                                     </button>
-                                    <Link to={'/admin/product-categories'}><button type="reset" className="btn btn-danger waves-effect ml-2" data-dismiss="modal">
+                                    <Link to={'/admin/product-categories'}><button type="button" className="btn btn-danger waves-effect ml-2">
                                         Return Back
-                                    </button>
-                                    </Link>
+                                    </button></Link>
                                 </div>
                             </div>
                         </form>
@@ -199,4 +209,4 @@ const CreateCategory = () => {
     )
 }
 
-export default CreateCategory;
+export default UpdateCategory;

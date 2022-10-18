@@ -15,17 +15,12 @@ import {Link} from "react-router-dom";
 
 
 const img = {
-  display: 'block',
-  width: '80px',
-  height: '100%',
-    objectFit: 'contain'
-};
-
-const arrayBufferToBase64 = (buffer) => {
-    let binary = '';
-    let bytes = [].slice.call(new Uint8Array(buffer));
-    bytes.forEach((b) => binary += String.fromCharCode(b));
-    return window.btoa(binary);
+    display: 'block',
+    width: '80px',
+    height: '100%',
+    objectFit: 'contain',
+    padding: '5px',
+    border: '1px dashed black',
 };
 
 const CategoryList = ({categoryList}) => {
@@ -55,7 +50,7 @@ const CategoryList = ({categoryList}) => {
     }, [search]);
 
 
-    const deleteProduct = async (data) => {
+    const deleteCategory= async (data) => {
          try {
              const response = await axiosPrivate.delete(`/admin/delete/${data._id}/category`)
              if(response.status === 200){
@@ -68,7 +63,7 @@ const CategoryList = ({categoryList}) => {
              notifyError('Error encountered')
              console.log(e)
          }
-  }
+    }
 
 
     const columns = [
@@ -98,8 +93,8 @@ const CategoryList = ({categoryList}) => {
             name: 'Action',
             cell: row => (
                 <>
-                <button className={'btn btn-sm btn-primary'}>Edit</button>
-                <button className={'btn btn-sm btn-danger ml-1'} onClick={() => deleteProduct(row)}>Delete</button>
+                <Link to={`/admin/update/${row._id}/category`}><button className={'btn btn-sm btn-primary'}>Edit</button></Link>
+                <button className={'btn btn-sm btn-danger ml-1'} onClick={() => deleteCategory(row)}>Delete</button>
                 </>
             )
         }
@@ -116,25 +111,11 @@ const customStyles = {
           background: '#222437',
           fontSize: '14px',
           fontWeight: '500',
-          textTransform: 'uppercase'
+          textTransform: 'uppercase',
+          color: 'white'
       }
     },
 }
-
-
-createTheme('solarized', {
-  background: {
-    default: 'transparent',
-  },
-  divider: {
-    default: 'rgba(242,244,241,0.3)',
-  },
-  striped: {
-      default: '#323550'
-  },
-}, 'dark');
-
-
 
     return (
         <>
@@ -171,7 +152,6 @@ createTheme('solarized', {
                 </div>
                 }
                 subHeaderAlign={'right'}
-                theme={'solarized'}
                 customStyles={customStyles}
             />
         </>

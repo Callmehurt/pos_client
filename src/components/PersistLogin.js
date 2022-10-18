@@ -16,8 +16,8 @@ const PersistLogin = () => {
     const authState = useSelector((state) => state.authentication)
 
     useEffect(() => {
-        let isMounted = true;
 
+        let isMounted = true;
         const verifyRefreshToken = async () => {
             try{
                 await refresh();
@@ -36,7 +36,7 @@ const PersistLogin = () => {
 
 
     useEffect(() => {
-        console.log(`isLoading: ${isLoading}`)
+        console.log(`whole page isLoading: ${isLoading}`)
         console.log(`Auth: ${authState}`)
     }, [isLoading])
 

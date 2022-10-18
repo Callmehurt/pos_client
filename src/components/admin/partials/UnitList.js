@@ -77,7 +77,6 @@ const UnitList = () => {
 
 
     const deleteUnit = async (data) => {
-        console.log(data._id)
          try {
              const response = await axiosPrivate.delete(`/admin/delete/${data._id}/unit`)
              if(response.status === 200){
@@ -132,24 +131,11 @@ const UnitList = () => {
               background: '#222437',
               fontSize: '14px',
               fontWeight: '500',
-              textTransform: 'uppercase'
+              textTransform: 'uppercase',
+              color: 'white'
           }
         },
     }
-
-
-    createTheme('solarized', {
-      background: {
-        default: 'transparent',
-      },
-      divider: {
-        default: 'rgba(242,244,241,0.3)',
-      },
-      striped: {
-          default: '#323550'
-      },
-    }, 'dark');
-
 
     return (
         <>
@@ -186,7 +172,6 @@ const UnitList = () => {
                 </div>
                 }
                 subHeaderAlign={'right'}
-                theme={'solarized'}
                 customStyles={customStyles}
             />
         </>

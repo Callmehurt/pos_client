@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faDashboard, faPhotoFilm, faBoxesStacked} from "@fortawesome/free-solid-svg-icons";
+import {faDashboard, faPhotoFilm, faBoxesStacked, faDolly, faPerson} from "@fortawesome/free-solid-svg-icons";
 
 const AdminNavbar = ({userDetail}) => {
     return (
@@ -9,8 +9,11 @@ const AdminNavbar = ({userDetail}) => {
               <li className="has-submenu">
                   <Link to={`/${userDetail.role}/dashboard`}><FontAwesomeIcon icon={faDashboard} className={'mr-1'} /> Dashboard</Link>
               </li>
-               <li className="has-submenu">
+              <li className="has-submenu">
                   <Link to={`/${userDetail.role}/medias`}><FontAwesomeIcon icon={faPhotoFilm} className={'mr-1'} /> Medias</Link>
+              </li>
+              <li className="has-submenu">
+                  <Link to={`/admin/providers`}><FontAwesomeIcon icon={faPerson} className={'mr-1'} /> Providers</Link>
               </li>
 
               <li className="has-submenu">
@@ -22,6 +25,21 @@ const AdminNavbar = ({userDetail}) => {
                               <li><Link to={'/admin/unit-group'}>Unit Group</Link></li>
                               <li><Link to={'/admin/units'}>Units</Link></li>
                               <li><Link to={'/admin/product-categories'}>Product Categories</Link></li>
+                              <li><Link to={'/admin/products'}>Products</Link></li>
+                              <li><Link to={'/admin/stock-management'}>Stock Adjustment</Link></li>
+                              <li><Link to={'/admin/stock-flow-history'}>Stock Flow Records</Link></li>
+                          </ul>
+                      </li>
+                  </ul>
+              </li>
+              <li className="has-submenu">
+                  <a href="#"><FontAwesomeIcon icon={faDolly} className={'mr-1'} /> Procurements <i
+                      className="mdi mdi-chevron-down mdi-drop"></i></a>
+                  <ul className="submenu megamenu">
+                      <li>
+                          <ul>
+                              <li><Link to={'/admin/create-procurement'}>Create Procurement</Link></li>
+                              <li><Link to={'/admin/procurements'}>Procurements List</Link></li>
                           </ul>
                       </li>
                   </ul>

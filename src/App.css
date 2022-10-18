@@ -1,2 +1,83 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&display=swap');
 
+.container-fluid{
+  max-width: 1500px !important;
+}
+
+.toggleInput {
+  visibility: hidden;
+  position: absolute;
+  top: -9999px;
+  height: 0;
+  width: 0;
+}
+.toggleInput + label {
+  margin-left: 1rem;
+  display: flex;
+  height: 24.8px;
+  width: 54px;
+  border-radius: 2rem;
+  background: linear-gradient(to right, #0a0 50%, #a00 50%);
+  background-size: 200% 100%;
+  background-position: 100% 0;
+  box-shadow: 0 0 3px 1px rgba(0, 0, 0, 0.25) inset, 0 2px 5px -1px rgba(0, 0, 0, 0.2) inset;
+  transition: all 250ms ease-in-out;
+}
+.toggleInput + label > span {
+  display: block;
+  position: relative;
+  height: 28.8px;
+  width: 28.8px;
+  border-radius: 50%;
+  top: -2px;
+  left: -2px;
+  background: hsl(175, 5%, 95%);
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.3), 0 2px 1px 1px rgba(0, 0, 0, 0.2);
+  transition: all 250ms ease-in-out;
+}
+.toggleInput:checked + label {
+  background-position: 0 0;
+  transition: all 250ms ease-in-out;
+}
+.toggleInput:checked + label > span {
+  left: 27.2px;
+  transition: all 250ms ease-in-out;
+}
+
+
+/*Loading animation*/
+
+.loader {
+  background-color: transparent;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  /*top: 0; left: 0;*/
+  margin-top: 10%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+}
+
+.loader__element {
+  border-radius: 100%;
+  border: 5px solid #555;
+  margin: calc(5px*2);
+}
+
+.loader__element:nth-child(1) {
+  animation: preloader .6s ease-in-out alternate infinite;
+}
+.loader__element:nth-child(2) {
+  animation: preloader .6s ease-in-out alternate .2s infinite;
+}
+
+.loader__element:nth-child(3) {
+  animation: preloader .6s ease-in-out alternate .4s infinite;
+}
+
+@keyframes preloader {
+  100% { transform: scale(2); }
+}

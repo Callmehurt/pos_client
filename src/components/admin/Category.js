@@ -14,7 +14,7 @@ const Category = () => {
 
     useEffect(() => {
         fetchAllCategories();
-    }, [])
+    })
 
 
     const fetchAllCategories = async () => {
