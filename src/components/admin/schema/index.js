@@ -32,7 +32,6 @@ export const productSchema = Yup.object({
 
 export const categorySchema = Yup.object({
     name: Yup.string().min(2).required('Name is required'),
-    mediaId: Yup.string().required('Media is required'),
 })
 
 export const providerSchema = Yup.object({
@@ -42,8 +41,15 @@ export const providerSchema = Yup.object({
 })
 
 export const procurementSchema = Yup.object({
-    // name: Yup.string().min(2).required('Name is required'),
+    name: Yup.string().min(2).required('Name is required'),
+    // invoiceNumber: Yup.string().required('Invoice number is required'),
     // invoiceDate: Yup.string().required('Invoice date is required'),
-    // provider: Yup.string().required('Provider is required'),
+    provider: Yup.string().required('Provider is required'),
     products: Yup.array().min(1)
+})
+
+export const tableSchema = Yup.object({
+    tableNumber: Yup.string().min(2).required('Table number is required'),
+    tableSpace: Yup.number().min(1).required('Table space is required'),
+    status: Yup.string().required('Status is required')
 })

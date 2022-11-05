@@ -54,15 +54,15 @@ const Header = () => {
                                       </div>
                                   </li>
 
-                                  <li className="menu-item dropdown notification-list list-inline-item">
-                                      <a className="navbar-toggle nav-link">
-                                          <div className="lines">
-                                              <span></span>
-                                              <span></span>
-                                              <span></span>
-                                          </div>
-                                      </a>
-                                  </li>
+                                  {/*<li className="menu-item dropdown notification-list list-inline-item">*/}
+                                  {/*    <a className="navbar-toggle nav-link">*/}
+                                  {/*        <div className="lines">*/}
+                                  {/*            <span></span>*/}
+                                  {/*            <span></span>*/}
+                                  {/*            <span></span>*/}
+                                  {/*        </div>*/}
+                                  {/*    </a>*/}
+                                  {/*</li>*/}
 
                               </ul>
 
@@ -76,7 +76,8 @@ const Header = () => {
                   <div className="navbar-custom">
                       <div className="container-fluid">
                           {
-                              userDetail.role === 'admin' ? <AdminNavbar userDetail={userDetail}/> : ''
+                              userDetail.role === 'admin' ? <AdminNavbar userDetail={userDetail}/>
+                              : ''
                           }
                       </div>
                   </div>

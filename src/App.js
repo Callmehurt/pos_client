@@ -1,4 +1,3 @@
-import './lightStyle.css'
 import './App.css';
 import 'react-toastify/dist/ReactToastify.css';
 import RequireAuth from "./components/RequireAuth";
@@ -7,7 +6,7 @@ import {Routes, Route} from 'react-router-dom'
 import Login from "./components/Login";
 import Layout from "./components/Layout";
 import Dashboard from "./components/admin/Dashboard";
-import StaffDashboard from './components/staff/Dashboard'
+import StaffDashboard from './components/staff/PosMain'
 import NotFound from "./components/NotFound";
 import PersistLogin from "./components/PersistLogin";
 import AppLayout from "./components/common/AppLayout";
@@ -25,7 +24,10 @@ import StockFlowRecords from "./components/admin/StockFlowRecords";
 import Procurement from "./components/admin/procurement/Procurement";
 import Providers from "./components/admin/Providers";
 import CreateProcurement from "./components/admin/procurement/CreateProcurement";
-import ProcurementList from "./components/admin/procurement/ProcurementList";
+import EditProcurement from "./components/admin/procurement/EditProcurement";
+import StaffAppLayout from "./components/common/StaffAppLayout";
+import Staffs from "./components/admin/Staffs";
+import Tables from "./components/admin/Tables";
 
 function App() {
   return (
@@ -65,12 +67,19 @@ function App() {
 
                         <Route exact path={'/admin/procurements'} element={<Procurement/>} />
                         <Route exact path={'/admin/create-procurement'} element={<CreateProcurement/>} />
+                        <Route exact path={'/admin/edit/:procurementId/procurement'} element={<EditProcurement/>} />
+
+
+                        <Route exact path={'/admin/table-list'} element={<Tables/>} />
+
+
+                        <Route exact path={'/admin/staff-list'} element={<Staffs/>} />
                     </Route>
                 </Route>
 
                 {/*Staff routes*/}
                 <Route element={<RequireAuth allowedRole={'staff'} />}>
-                    <Route element={<AppLayout/>}>
+                    <Route element={<StaffAppLayout/>}>
                         <Route exact path={'/staff/dashboard'} element={<StaffDashboard/>} />
                     </Route>
                 </Route>

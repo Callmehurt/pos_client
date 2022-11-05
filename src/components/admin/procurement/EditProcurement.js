@@ -9,15 +9,54 @@ import {useDispatch, useSelector} from "react-redux";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import ProductSearch from "./ProductSearch";
 import {Modal} from "react-bootstrap";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
+import {fetchProcurements} from "../../../redux/actions/procurementAction";
+import EditProductSearch from "./EditProductSearch";
 
-const CreateProcurement = () => {
+const EditProcurement = () => {
 
     const providersList = useSelector((state) => state.providersList.providers);
+    const procurementList = useSelector((state) => state.procurements.procurementList);
 
     const privateAxios = useAxiosPrivate();
     const dispatch = useDispatch();
+    const location = useLocation();
+    const navigate = useNavigate();
 
-    const [selectedProduct, setSelectedProduct] = useState([])
+    const {procurementId} = useParams();
+    const selectedProcurement = procurementList.find((data) => data._id === procurementId);
+
+
+    const [selectedProduct, setSelectedProduct] = useState([]);
+
+    const [initialValues, setInitialValues] = useState({
+            procurementId: '',
+            name: '',
+            invoiceNumber: '',
+            deliveryDate: '',
+            invoiceDate: '',
+            deliveryStatus: 'stocked',
+            paymentStatus: 'paid',
+            provider: '',
+            products: null
+        });
+
+    useEffect(() => {
+        if(procurementId && selectedProcurement){
+            setInitialValues({
+                procurementId: selectedProcurement._id,
+                name: selectedProcurement.name,
+                invoiceNumber: selectedProcurement.invoiceNumber,
+                deliveryDate: selectedProcurement?.deliveryDate ? selectedProcurement.deliveryDate : '',
+                invoiceDate: selectedProcurement.invoiceDate,
+                deliveryStatus: selectedProcurement.deliveryStatus,
+                paymentStatus: selectedProcurement.paymentStatus,
+                provider: selectedProcurement.provider._id,
+                products: selectedProcurement.products
+            });
+            setSelectedProduct(selectedProcurement.products)
+        }
+    }, [selectedProcurement])
 
     const effectRun = useRef(false);
     useEffect(() => {
@@ -30,7 +69,17 @@ const CreateProcurement = () => {
             dispatch(fetchProviders(res.data))
         }
 
+        const getProcurements = async () => {
+            const res = await privateAxios.get('/admin/fetch/procurements', {
+                signal: abortController.signal
+            });
+            dispatch(fetchProcurements(res.data));
+            return res.data;
+        }
+
+
         if(effectRun.current){
+            getProcurements();
             getProviderData();
         }
 
@@ -40,16 +89,6 @@ const CreateProcurement = () => {
         }
     }, [])
 
-    const [initialValues, setInitialValues] = useState({
-            name: '',
-            invoiceNumber: '',
-            deliveryDate: '',
-            invoiceDate: '',
-            deliveryStatus: 'stocked',
-            paymentStatus: 'paid',
-            provider: '',
-            products: null
-        })
 
     const {values, errors, handleBlur, handleChange, handleSubmit, touched} = useFormik({
         initialValues: initialValues,
@@ -58,26 +97,17 @@ const CreateProcurement = () => {
         onSubmit: async (values, action) => {
             const totalPurchaseValue = values.products.reduce((total, obj) => total + parseInt(obj?.purchaseValue ? obj.purchaseValue : 1), 0)
             const totalSaleValue = values.products.reduce((total, obj) => total + (parseInt(obj?.changedQuantity ? obj.changedQuantity : 1)*parseInt(obj.salePrice)), 0)
-            values.totalPurchaseValue = totalPurchaseValue;
-            values.totalSaleValue = totalSaleValue;
+            values.purchaseValue = totalPurchaseValue;
+            values.saleValue = totalSaleValue;
 
             try {
                 setIsLoading(true)
-                const response = await privateAxios.post('/admin/register/procurement', values);
+                const response = await privateAxios.put('/admin/update/procurement', values);
+                console.log(response)
                 if(response.status === 200){
                     setShow(false);
-                    setInitialValues({
-                        name: '',
-                        invoiceNumber: '',
-                        deliveryDate: '',
-                        invoiceDate: '',
-                        deliveryStatus: 'stocked',
-                        paymentStatus: 'paid',
-                        provider: '',
-                        products: null
-                    })
                     notifySuccess(response.data.message);
-                    setSelectedProduct([]);
+                    navigate('/admin/procurements', {state: {from: location}, replace: true})
                 }else {
                     notifyError(response.data.message)
                 }
@@ -92,7 +122,7 @@ const CreateProcurement = () => {
 
 
     useEffect(() => {
-        const newValue = {...values};
+        const newValue = {...initialValues};
         newValue['products'] = selectedProduct;
         setInitialValues(newValue);
     }, [selectedProduct]);
@@ -338,7 +368,7 @@ const CreateProcurement = () => {
                           </form>
                       </div>
                       <div className="tab-pane p-3" id="products" role="tabpanel">
-                          <ProductSearch selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct}/>
+                          <EditProductSearch selectedProduct={selectedProduct} setSelectedProduct={setSelectedProduct}/>
                       </div>
                   </div>
               </div>
@@ -349,4 +379,4 @@ const CreateProcurement = () => {
     )
 }
 
-export default CreateProcurement;
+export default EditProcurement;

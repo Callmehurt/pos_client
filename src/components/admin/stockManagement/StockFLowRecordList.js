@@ -1,7 +1,5 @@
-import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft, faArrowRight, faPlusCircle, faTrashCan} from "@fortawesome/free-solid-svg-icons";
-import SmallLoader from "../../common/SmallLoader";
 import DataTable, {createTheme} from "react-data-table-component";
 import React, {useEffect, useState} from "react";
 import Fuse from "fuse.js";
@@ -9,6 +7,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {notifyError, notifySuccess} from "../../toastNotification";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import {fetchStockRecord} from "../../../redux/actions/stockFlowAction";
+import TableLoader from "../../loader/TableLoader";
+import moment from 'moment'
+import ExpandableRow from "./ExpandableRow";
 
 
 const customStyles = {
@@ -29,8 +30,8 @@ const StockFlowRecordList = () => {
     const dispatch = useDispatch();
 
     const stockFLowRecords = useSelector((state) => state.stockFlowRecords.stockFlows);
+    const isLoading = useSelector((state) => state.loading.isLoading);
 
-    const [isLoading, setIsLoading] = useState(false)
     const [search, setSearch] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
@@ -67,13 +68,6 @@ const StockFlowRecordList = () => {
 
 
     const columns = [
-        // {
-        //     name: 'Product',
-        //     cell: row => (
-        //         <span>okay</span>
-        //     ),
-        //     sortable: false,
-        // },
         {
             name: 'Product',
             selector: row => row.product.name,
@@ -86,7 +80,7 @@ const StockFlowRecordList = () => {
         },
         {
             name: 'Order',
-            selector: row => row.order ? 'Okay' : 'N/A',
+            selector: row => row.order ? row.order : 'N/A',
             sortable: true,
         },
         {
@@ -103,7 +97,9 @@ const StockFlowRecordList = () => {
         },
         {
             name: 'Initial Quantity',
-            selector: row => row.initialQuantity,
+            selector: row => (
+                row.stockManagement ? row.initialQuantity : 'N/A'
+            ),
             sortable: true,
         },
         {
@@ -113,7 +109,9 @@ const StockFlowRecordList = () => {
         },
         {
             name: 'New Quantity',
-            selector: row => row.newQuantity,
+            selector: row => (
+                row.stockManagement ? row.newQuantity : 'N/A'
+            ),
             sortable: true,
         },
         {
@@ -123,7 +121,7 @@ const StockFlowRecordList = () => {
         },
         {
             name: 'Prompt Date',
-            selector: row => row.createdAt,
+            selector: row => <span>{moment(row.createdAt).format('LLL')}</span>,
             sortable: true,
         },
 
@@ -198,7 +196,7 @@ const StockFlowRecordList = () => {
                 highlightOnHover={true}
                 pointerOnHover={true}
                 persistTableHead={true}
-                fixedHeader={true}
+                fixedHeader={false}
                 subHeader={true}
                 subHeaderComponent={
                 <div className="dataTables_filter">
@@ -215,8 +213,10 @@ const StockFlowRecordList = () => {
                 subHeaderAlign={'right'}
                 customStyles={customStyles}
                 progressPending={isLoading}
-			    progressComponent={<SmallLoader />}
+			    progressComponent={<TableLoader />}
                 conditionalRowStyles={conditionalRowStyles}
+                expandableRows
+                expandableRowsComponent={ExpandableRow}
             />
         </>
     )

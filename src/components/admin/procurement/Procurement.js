@@ -45,11 +45,16 @@ const Procurement = () => {
               </div>
           </div>
 
-          <div className="row">
+           <div className="row justify-content-center">
               <div className="col-lg-12">
-                  <ProcurementList/>
+                  <div className="card m-b-30">
+                        <div className="card-body">
+                            <ProcurementList/>
+                        </div>
+                  </div>
               </div>
-          </div>
+           </div>
+
         </>
     )
 }

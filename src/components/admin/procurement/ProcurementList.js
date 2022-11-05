@@ -5,11 +5,10 @@ import DataTable from "react-data-table-component";
 import React, {useEffect, useState} from "react";
 import Fuse from "fuse.js";
 import {useDispatch, useSelector} from "react-redux";
-// import ProviderAddModal from "./ProviderAddModal";
-// import {notifyError, notifySuccess} from "../../toastNotification";
-// import {fetchProviders} from "../../../redux/actions/providerAction";
+import {notifyError, notifySuccess} from "../../toastNotification";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-// import ProviderEditModal from "./ProviderEditModal";
+import TableLoader from "../../loader/TableLoader";
+import {fetchProcurements} from "../../../redux/actions/procurementAction";
 
 const ProcurementList = () => {
 
@@ -19,11 +18,13 @@ const ProcurementList = () => {
     const axiosPrivate = useAxiosPrivate();
     const dispatch = useDispatch();
 
+    const [isLoading, setIsLoading] = useState(true);
     const [search, setSearch] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
 
     useEffect(() => {
+        setIsLoading(false)
         setSearchResults(procurementList)
     }, [procurementList])
 
@@ -40,28 +41,21 @@ const ProcurementList = () => {
         search ? setSearchResults(result.map((data) => data.item)) : setSearchResults(procurementList);
     }, [search]);
 
-    // const deleteProvider = async (data) => {
-    //      try {
-    //          const response = await axiosPrivate.delete(`/admin/delete/${data._id}/provider`)
-    //          if(response.status === 200){
-    //              notifySuccess(response.data.message)
-    //              const newData = [...procurementList]
-    //              newData.splice(newData.indexOf(data), 1)
-    //              dispatch(fetchProviders(newData))
-    //          }
-    //      }catch (e){
-    //          notifyError(e.response.data.message)
-    //          console.log(e)
-    //      }
-    // }
+    const deleteProcurement = async (data) => {
+         try {
+             const response = await axiosPrivate.delete(`/admin/delete/${data._id}/procurement`)
+             if(response.status === 200){
+                 notifySuccess(response.data.message)
+                 const newData = [...procurementList]
+                 newData.splice(newData.indexOf(data), 1)
+                 dispatch(fetchProcurements(newData))
+             }
+         }catch (e){
+             notifyError(e.response.data.message)
+             console.log(e)
+         }
+    }
 
-    // const [selectedProvider, setSelectedProvider] = useState({});
-
-    // const handleProviderEdit = (providerId) => {
-    //     const provider = providersList.find((data) => data._id === providerId);
-    //     setSelectedProvider(provider);
-    //     setEditShow(true);
-    // }
 
     const columns = [
         {
@@ -111,8 +105,27 @@ const ProcurementList = () => {
             name: 'Action',
             cell: row => (
                 <>
-                {/*<button className={'btn btn-sm btn-primary'} onClick={() => handleProviderEdit(row._id)}>Edit</button>*/}
-                {/*<button className={'btn btn-sm btn-danger ml-1'} onClick={() => deleteProvider(row)}>Delete</button>*/}
+                    <ul className="navbar-right ml-auto list-inline float-right mb-0">
+
+                                  <li className="dropdown notification-list list-inline-item">
+                                      <div className="dropdown notification-list nav-pro-img">
+                                          <a className="dropdown-toggle nav-link arrow-none nav-user"
+                                             data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                                             aria-expanded="false">
+                                             <button className={'btn btn-sm btn-primary'}>Options..</button>
+                                          </a>
+                                          <div className="dropdown-menu dropdown-menu-right profile-dropdown ">
+                                              {
+                                                  row.deliveryStatus === 'pending' ? (
+                                                      <Link to={`/admin/edit/${row._id}/procurement`} className="dropdown-item" href="#">Edit</Link>
+                                                  ) : ''
+                                              }
+                                              <a className="dropdown-item" href="#">Invoice</a>
+                                              <a className="dropdown-item" href="#" onClick={() => deleteProcurement(row)}>Delete</a>
+                                          </div>
+                                      </div>
+                                  </li>
+                    </ul>
                 </>
             )
         }
@@ -133,11 +146,8 @@ const ProcurementList = () => {
         },
     }
 
-    const [editShow, setEditShow] = useState(false);
-
     return (
         <>
-            {/*<ProviderEditModal show={editShow} setShow={setEditShow} selectedProvider={selectedProvider}/>*/}
             <DataTable
                 title={'Procurements List'}
                 columns={columns}
@@ -167,6 +177,8 @@ const ProcurementList = () => {
                 </div>
                 }
                 subHeaderAlign={'right'}
+                progressPending={isLoading}
+			    progressComponent={<TableLoader />}
                 customStyles={customStyles}
             />
         </>

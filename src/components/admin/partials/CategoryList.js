@@ -8,6 +8,7 @@ import Fuse from "fuse.js";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import {notifySuccess, notifyError} from "../../toastNotification";
 import {useDispatch} from "react-redux";
+import noImg from '../../../images/noImage.jpg'
 
 
 import {fetchCategories} from "../../../redux/actions/categoryAction";
@@ -75,7 +76,7 @@ const CategoryList = ({categoryList}) => {
                       style={img}
                       alt={'category image'}
                       onLoad={() => { URL.revokeObjectURL(`data:image/png;base64,${row.media.image}`) }}
-                    /> : ''
+                    /> : <img src={noImg} style={img} alt=""/>
             ),
             sortable: true,
         },

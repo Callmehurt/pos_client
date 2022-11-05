@@ -1,3 +1,4 @@
+import '../../lightStyle.css'
 import {Outlet} from 'react-router-dom'
 import Header from "./Header";
 import {ToastContainer} from "react-toastify";

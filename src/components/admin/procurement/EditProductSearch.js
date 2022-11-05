@@ -5,6 +5,8 @@ import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {useDebounce} from "use-debounce";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
 import arrayBufferToBase64 from "../../../hooks/arrayBufferToBase64";
+import {notifySuccess, notifyError} from "../../toastNotification";
+import {Modal} from "react-bootstrap";
 
 const img = {
     display: 'block',
@@ -35,8 +37,7 @@ const dropDownStyle = {
     overflowY: 'auto'
 }
 
-const ProductSearch = ({selectedProduct, setSelectedProduct}) => {
-
+const EditProductSearch = ({selectedProduct, setSelectedProduct}) => {
 
     const axiosPrivate = useAxiosPrivate();
     const [searchKey, setSearchKey] = useState('');
@@ -216,4 +217,4 @@ const ProductSearch = ({selectedProduct, setSelectedProduct}) => {
     )
 }
 
-export default ProductSearch;
+export default EditProductSearch;

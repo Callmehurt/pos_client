@@ -8,6 +8,8 @@ import {loaderReducer} from "./loaderReducer";
 import {stockFlowReducer} from "./stockFlowReducer";
 import {providerReducer} from "./providerReducer";
 import {procurementReducer} from "./procurementReducer";
+import {staffReducer} from "./staffReducer";
+import {tableReducer} from "./tableReducer";
 
 const reducers = combineReducers({
     authentication: authReducer,
@@ -18,7 +20,9 @@ const reducers = combineReducers({
     loading: loaderReducer,
     stockFlowRecords: stockFlowReducer,
     providersList: providerReducer,
-    procurements: procurementReducer
+    procurements: procurementReducer,
+    staffs: staffReducer,
+    tables: tableReducer,
 });
 
 export default reducers;

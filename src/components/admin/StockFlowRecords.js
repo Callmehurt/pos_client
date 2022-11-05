@@ -4,6 +4,7 @@ import StockFlowRecordList from "./stockManagement/StockFLowRecordList";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import {useDispatch} from "react-redux";
 import {fetchStockRecord} from "../../redux/actions/stockFlowAction";
+import {setLoadingFalse, setLoadingTrue} from "../../redux/actions/loadingAction";
 
 const StockFlowRecords = () => {
 
@@ -17,10 +18,12 @@ const StockFlowRecords = () => {
         const abortController = new AbortController();
         const fetchAllStockRecords = async () => {
             try {
+                dispatch(setLoadingTrue())
                 const res = await axiosPrivate.get('/admin/fetch/stock-flow', {
                     signal: abortController.signal
                 });
-                dispatch(fetchStockRecord(res.data))
+                dispatch(fetchStockRecord(res.data));
+                dispatch(setLoadingFalse())
             }catch (e) {
                 console.log(e)
             }

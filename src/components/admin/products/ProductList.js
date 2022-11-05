@@ -4,12 +4,12 @@ import Fuse from "fuse.js";
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faArrowLeft, faArrowRight, faPlusCircle, faPenAlt, faTrashCan} from "@fortawesome/free-solid-svg-icons";
-import DataTable, {createTheme} from "react-data-table-component";
+import DataTable from "react-data-table-component";
 import {notifyError, notifySuccess} from "../../toastNotification";
 import {fetchProducts} from "../../../redux/actions/productAction";
 import useAxiosPrivate from "../../../hooks/useAxiosPrivate";
-import SmallLoader from "../../common/SmallLoader";
 import noImage from "../../../images/noImage.jpg";
+import TableLoader from "../../loader/TableLoader";
 
 
 const img = {
@@ -200,7 +200,7 @@ const ProductList = () => {
                 // theme={'solarized'}
                 customStyles={customStyles}
                 progressPending={isLoading}
-			    progressComponent={<SmallLoader />}
+			    progressComponent={<TableLoader />}
             />
         </>
     )

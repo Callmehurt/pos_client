@@ -22,6 +22,9 @@ const Login = () => {
        password: ''
     });
 
+    const [isLoading, setIsLoading] = useState(false);
+    const [errMsg, setErrMsg] = useState('');
+
 
     const formHandler = (e) => {
         const credential = {...loginCredential};
@@ -32,6 +35,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
+        setIsLoading(true);
         await axiosDefault.post('/user/login', loginCredential).then((res) => {
             const userDetail = {
                 token: res.data.access_token,
@@ -47,9 +51,12 @@ const Login = () => {
             if(from.includes('/staff') && userDetail.user.role !== 'staff'){
                 from = `/${userDetail.user.role}/dashboard`
             }
+            setIsLoading(false)
             navigate(from, {replace: true});
         }).catch((err) => {
             console.log(err.response.data.message)
+            setErrMsg(err.response.data.message)
+            setIsLoading(false)
         })
     }
 
@@ -58,23 +65,17 @@ const Login = () => {
         if(authenticatedUser.isAuthenticated){
             navigate(`/${authenticatedUser.user.role}/dashboard`)
         }
-    }, [])
+    }, [authenticatedUser, navigate])
 
     return (
         <>
-            {/*<form onSubmit={handleSubmit}>*/}
-            {/*    <input type="text" name={'email'} placeholder={'email'} value={loginCredential.email} onChange={(e) => formHandler(e)}/>*/}
-            {/*    <br/>*/}
-            {/*    <input type="password" name={'password'} placeholder={'password'} value={loginCredential.password} onChange={(e) => formHandler(e)}/>*/}
-            {/*    <br/>*/}
-            {/*    <button type={'submit'}>Login</button>*/}
-            {/*</form>*/}
             <div className="wrapper-page">
                 <div className="card card-pages shadow-none">
                     <div className="card-body">
                         <div className="text-center m-t-0 m-b-15">
-                            <a href="#" className="logo logo-admin">
-                                <img src={logo} alt="" height="130" style={{borderRadius: '50%'}} /></a>
+                            <Link to={'/'} className="logo logo-admin">
+                                <img src={logo} alt="" height="130" style={{borderRadius: '50%'}} />
+                            </Link>
                         </div>
                         <h5 className="font-18 text-center">Sign in</h5>
 
@@ -94,18 +95,39 @@ const Login = () => {
                                 </div>
                             </div>
 
+                            <div className="form-group">
+                               <div className="col-12">
+                                   {
+                                    errMsg ? (
+                                        <ul className="parsley-errors-list filled">
+                                            <li>{errMsg}</li>
+                                        </ul>
+                                    ): null
+                                }
+                               </div>
+                            </div>
+
                             <div className="form-group text-center m-t-20">
                                 <div className="col-12">
-                                    <button className="btn btn-primary btn-block btn-lg waves-effect waves-light"
-                                            type="submit">Log In
-                                    </button>
+                                    {
+                                        isLoading ? (
+                                            <button className="btn btn-primary btn-block btn-lg waves-effect waves-light">
+                                                Logging in..
+                                            </button>
+                                        ):
+                                            (
+                                                <button className="btn btn-primary btn-block btn-lg waves-effect waves-light"
+                                                        type="submit">Log In
+                                                </button>
+                                            )
+                                    }
                                 </div>
                             </div>
 
                             <div className="form-group row m-t-30 m-b-0">
                                 <div className="col-sm-7">
-                                    <a href="#" className="text-muted"><i
-                                        className="mdi mdi-lock m-r-5"></i> Forgot your password?</a>
+                                    <Link to={'/'} className="text-muted"><i
+                                        className="mdi mdi-lock m-r-5"></i> Forgot your password?</Link>
                                 </div>
                             </div>
                         </form>

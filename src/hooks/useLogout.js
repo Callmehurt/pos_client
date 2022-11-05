@@ -8,9 +8,7 @@ const useLogout = () => {
     const logout = async () => {
         try{
             const response = await axiosDefault.get('/user/logout');
-            console.log(response)
             if(response.status === 200){
-                console.log('okay done')
                 dispatch(logoutUser())
             }
         }catch (e){

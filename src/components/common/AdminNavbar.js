@@ -38,8 +38,20 @@ const AdminNavbar = ({userDetail}) => {
                   <ul className="submenu megamenu">
                       <li>
                           <ul>
-                              <li><Link to={'/admin/create-procurement'}>Create Procurement</Link></li>
+                              <li><Link to={'/admin/create-procurement'}>New Procurement</Link></li>
                               <li><Link to={'/admin/procurements'}>Procurements List</Link></li>
+                          </ul>
+                      </li>
+                  </ul>
+              </li>
+              <li className="has-submenu">
+                  <a href="#"><FontAwesomeIcon icon={faDolly} className={'mr-1'} /> Misc. <i
+                      className="mdi mdi-chevron-down mdi-drop"></i></a>
+                  <ul className="submenu megamenu">
+                      <li>
+                          <ul>
+                              <li><Link to={'/admin/table-list'}>Tables List</Link></li>
+                              <li><Link to={'/admin/staff-list'}>Staff List</Link></li>
                           </ul>
                       </li>
                   </ul>

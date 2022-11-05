@@ -1,0 +1,413 @@
+html { height: 100%; }
+body {height: 100%; }
+
+.pos-wrapper{
+  min-height: 100vh;
+  height: 100vh;
+  width: 100%;
+  background: #D1D5DB;
+  padding: 15px;
+}
+
+
+.pos-wrapper .header-area{
+  height: 5%;
+  width: 100%;
+}
+
+.pos-wrapper .pos-area{
+    height: 95%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    overflow: hidden;
+}
+
+.pos-wrapper .pos-area .calculationArea,
+.pos-wrapper .pos-area .productArea{
+    width: 49.5%;
+    background: white;
+    border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.qtyRow:hover{
+    background: #dddddd;
+}
+
+.searchArea{
+    padding: 7px;
+}
+
+.searchArea button{
+    height: 35px;
+    width: 45px;
+    display: grid;
+    place-items: center;
+    border: 0.5px solid gainsboro;
+    background: none;
+    border-radius: 5px;
+}
+
+.numpad-area{
+    display: grid;
+    grid-template-columns: auto auto auto
+}
+
+.numpad-area .nums{
+    border: 1px solid gainsboro;
+    height: 60px;
+}
+
+.numpad-area .nums button{
+    height: 100%;
+    width: 100%;
+    background: none;
+    border: none;
+}
+
+.numpad-area .nums button:hover{
+    background: rgba(219, 219, 219, 0.5);
+}
+
+.searchResults{
+    min-height: 300px;
+    overflow-y: auto;
+}
+
+.recentCalculation{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 18%;
+    border-top: 1px solid gainsboro;
+}
+
+.calculation-action-area{
+    height: 50px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+}
+
+.calculation-action-area .child{
+    width: calc(100%/4);
+    height: 100%;
+}
+
+.calculation-action-area .child button{
+    height: 100%;
+    width: 100%;
+    border: none;
+}
+
+.calculation-action-area .child button span{
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+}
+
+.calculation-action-area .child:nth-child(1) button{
+    background: #5ed05e;
+}
+
+.calculation-action-area .child:nth-child(4) button{
+    background: #F87171;
+}
+
+.calculation-action-area .child:nth-child(2) button{
+    background: #5c89e5;
+}
+
+.calculation-action-area .child:nth-child(3) button span{
+    color: black;
+}
+
+.discount-btn{
+    border: none;
+    background: transparent;
+    height: 40px;
+}
+
+.discount-active{
+    background: #dedede;
+    color: black;
+}
+
+.product-filter-area{
+
+}
+
+.product-filter-area ul li{
+    list-style: none;
+    display: inline-block;
+    margin: 5px;
+}
+
+.category-list{
+    display: grid;
+    grid-template-columns: calc(100%/6) calc(100%/6) calc(100%/6) calc(100%/6) calc(100%/6) calc(100%/6);
+}
+
+.category{
+    height: 130px;
+    border: 0.5px solid gainsboro;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.category img{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+    object-position: center;
+}
+
+.category div{
+    height: 50%;
+    width: 100%;
+    background: rgba(253, 253, 253, 0.7);
+    position: absolute;
+    bottom: 0;
+    display: grid;
+    place-items: center;
+}
+
+.category div h4{
+    font-size: 14px;
+    color: black;
+}
+
+.product-list{
+    display: grid;
+    grid-template-columns: calc(100%/6) calc(100%/6) calc(100%/6) calc(100%/6) calc(100%/6) calc(100%/6);
+}
+
+.loader-area{
+    height: auto;
+    width: auto;
+}
+
+.order-type-section{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    height: 150px;
+}
+
+.order-type-section .type-child{
+    width: 50%;
+    height: 100%;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+}
+
+.order-type-section .type-child img{
+    height: 80px;
+    width: auto;
+}
+
+.order-type-section .type-child:hover{
+    background: #60A5FA;
+    color: white;
+}
+
+.order-type-section .type-child.active{
+    background: #60A5FA;
+}
+
+.confirm-order-area{
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.confirm-order-area div{
+    width: 50%;
+    height: 100%;
+}
+
+.confirm-order-area div button{
+    height: 100%;
+    width: 100%;
+    border: none;
+    color: white;
+    background: transparent;
+}
+
+.confirm-order-area div:nth-child(1){
+    background: #22C55E;
+}
+
+.confirm-order-area div:nth-child(2){
+    background: #F87171;
+}
+
+.payment-box{
+    height: auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 10% 90%;
+}
+
+.payment-option{
+    height: 35px;
+    width: 100%;
+    border: none
+}
+
+.payment-option.active{
+    background: #68c634;
+    color: white;
+}
+
+.final-payment-area{
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.final-payment-area div{
+    padding: 20px;
+}
+
+.final-payment-area div span{
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 0;
+}
+
+.final-payment-area div:nth-child(1){
+    background: #BFDBFE;
+}
+
+.final-payment-area div:nth-child(2){
+    background: #FECACA;
+}
+
+.final-payment-area div:nth-child(3){
+    background: #BBF7D0;
+}
+
+.final-payment-area div:nth-child(4){
+    background: #FED7AA;
+}
+
+.payment-buttons{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    margin-top: 7px;
+}
+
+.payment-buttons div{
+    height: 40px;
+}
+
+.payment-buttons div:nth-child(1){
+    background: #4ADE80;
+}
+
+.payment-buttons div:nth-child(2){
+    background: #60A5FA;
+}
+
+.payment-buttons div button{
+    height: 100%;
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: white;
+    font-size: 16px;
+}
+
+
+.order-list-area{
+    height: 80vh;
+    border: 1px solid gainsboro;
+}
+
+.button-area{
+    height: 5vh;
+    border-bottom: 1px solid gainsboro;
+}
+
+.button-area button{
+    height: 100%;
+    width: 120px;
+    border: none;
+    font-size: 14px;
+}
+
+.button-area button.active{
+    background: #4ADE80;
+    color: white;
+}
+
+.order-lists{
+    height: 75vh;
+    width: 100%;
+    position: relative;
+    padding: 10px;
+    overflow-y: auto;
+}
+
+.order-lists .loader{
+    height: 50px;
+}
+
+.order-list{
+    height: 120px;
+    width: 100%;
+    border-bottom: 1px solid gainsboro;
+}
+
+.order-list .flex-box{
+    height: 70%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.order-list .flex-box div{
+    width: 50%;
+    height: 100%;
+    padding: 10px;
+}
+
+.order-list .btn-group{
+    height: 30%;
+    width: 100%;
+    position: relative;
+}
+
+.order-list .btn-group div{
+    width: auto;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    overflow: hidden;
+}
+
+.order-list .btn-group div button{
+    height: 100%;
+    width: 90px;
+    border: none;
+    color: white;
+}
+
+.order-list .btn-group div button:nth-child(1){
+    background: #60A5FA;
+}
+.order-list .btn-group div button:nth-child(2){
+    background: #4ADE80;
+}
