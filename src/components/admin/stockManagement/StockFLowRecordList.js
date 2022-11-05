@@ -98,7 +98,7 @@ const StockFlowRecordList = () => {
         {
             name: 'Initial Quantity',
             selector: row => (
-                row.stockManagement ? row.initialQuantity : 'N/A'
+                row.product.stockManagement ? row.initialQuantity : 'N/A'
             ),
             sortable: true,
         },
@@ -110,7 +110,7 @@ const StockFlowRecordList = () => {
         {
             name: 'New Quantity',
             selector: row => (
-                row.stockManagement ? row.newQuantity : 'N/A'
+                row.product.stockManagement ? row.newQuantity : 'N/A'
             ),
             sortable: true,
         },
@@ -175,6 +175,16 @@ const StockFlowRecordList = () => {
               },
             },
           },
+        {
+            when: row => row.operationType === 'sale',
+            style: {
+              backgroundColor: 'rgba(119,248,108,0.5)',
+              color: 'black',
+              '&:hover': {
+                cursor: 'pointer',
+              },
+            },
+          },
     ]
     const nextIcon = <FontAwesomeIcon icon={faArrowRight} />;
     const prevIcon = <FontAwesomeIcon icon={faArrowLeft} />;
@@ -192,7 +202,6 @@ const StockFlowRecordList = () => {
                 paginationIconNext={nextIcon}
                 paginationIconPrevious={prevIcon}
                 responsive={true}
-                striped={true}
                 highlightOnHover={true}
                 pointerOnHover={true}
                 persistTableHead={true}

@@ -10,6 +10,7 @@ import {providerReducer} from "./providerReducer";
 import {procurementReducer} from "./procurementReducer";
 import {staffReducer} from "./staffReducer";
 import {tableReducer} from "./tableReducer";
+import {cashFlowReducer} from "./cashFlowReducer";
 
 const reducers = combineReducers({
     authentication: authReducer,
@@ -23,6 +24,7 @@ const reducers = combineReducers({
     procurements: procurementReducer,
     staffs: staffReducer,
     tables: tableReducer,
+    cashFlows: cashFlowReducer
 });
 
 export default reducers;

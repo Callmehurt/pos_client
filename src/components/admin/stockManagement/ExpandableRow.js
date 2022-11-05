@@ -10,9 +10,9 @@ const ExpandableRow = ({data}) => {
                 <p style={{lineHeight: '10px'}}><strong>Order: </strong>{data.order ? data.order : 'N/A'}</p>
                 <p style={{lineHeight: '10px'}}><strong>Operation: </strong><span style={{textTransform: 'capitalize'}}>{data.operationType}</span></p>
                 <p style={{lineHeight: '10px'}}><strong>Unit: </strong>{data.product.assignedUnit.name} - {data.product.assignedUnit.identifier}</p>
-                <p style={{lineHeight: '10px'}}><strong>Initial Quantity: </strong>{data.stockManagement ? data.initialQuantity : 'N/A'}</p>
+                <p style={{lineHeight: '10px'}}><strong>Initial Quantity: </strong>{data.product.stockManagement? data.initialQuantity : 'N/A'}</p>
                 <p style={{lineHeight: '10px'}}><strong>Quantity: </strong>{data.quantity}</p>
-                <p style={{lineHeight: '10px'}}><strong>New Quantity: </strong>{data.stockManagement ? data.newQuantity : 'N/A'}</p>
+                <p style={{lineHeight: '10px'}}><strong>New Quantity: </strong>{data.product.stockManagement ? data.newQuantity : 'N/A'}</p>
                 <p style={{lineHeight: '10px'}}><strong>Total Price: </strong>Rs. {data.amount}</p>
                 <p style={{lineHeight: '10px'}}><strong>Prompt Date: </strong>{moment(data.createdAt).format('LLL')}</p>
                 </div>

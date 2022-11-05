@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faDashboard, faPhotoFilm, faBoxesStacked, faDolly, faPerson} from "@fortawesome/free-solid-svg-icons";
+import {faDashboard, faPhotoFilm, faBoxesStacked, faDolly, faPerson, faCalculator} from "@fortawesome/free-solid-svg-icons";
 
 const AdminNavbar = ({userDetail}) => {
     return (
@@ -52,6 +52,18 @@ const AdminNavbar = ({userDetail}) => {
                           <ul>
                               <li><Link to={'/admin/table-list'}>Tables List</Link></li>
                               <li><Link to={'/admin/staff-list'}>Staff List</Link></li>
+                          </ul>
+                      </li>
+                  </ul>
+              </li>
+
+              <li className="has-submenu">
+                  <a href="#"><FontAwesomeIcon icon={faCalculator} className={'mr-1'} /> Accounting <i
+                      className="mdi mdi-chevron-down mdi-drop"></i></a>
+                  <ul className="submenu megamenu">
+                      <li>
+                          <ul>
+                              <li><Link to={'/admin/cash-flows'}>Cash FLow</Link></li>
                           </ul>
                       </li>
                   </ul>

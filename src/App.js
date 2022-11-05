@@ -28,6 +28,7 @@ import EditProcurement from "./components/admin/procurement/EditProcurement";
 import StaffAppLayout from "./components/common/StaffAppLayout";
 import Staffs from "./components/admin/Staffs";
 import Tables from "./components/admin/Tables";
+import CashFlow from "./components/admin/CashFlow";
 
 function App() {
   return (
@@ -68,6 +69,9 @@ function App() {
                         <Route exact path={'/admin/procurements'} element={<Procurement/>} />
                         <Route exact path={'/admin/create-procurement'} element={<CreateProcurement/>} />
                         <Route exact path={'/admin/edit/:procurementId/procurement'} element={<EditProcurement/>} />
+
+
+                        <Route exact path={'/admin/cash-flows'} element={<CashFlow/>} />
 
 
                         <Route exact path={'/admin/table-list'} element={<Tables/>} />
