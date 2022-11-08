@@ -15,6 +15,9 @@ const AdminNavbar = ({userDetail}) => {
               <li className="has-submenu">
                   <Link to={`/admin/providers`}><FontAwesomeIcon icon={faPerson} className={'mr-1'} /> Providers</Link>
               </li>
+              <li className="has-submenu">
+                  <Link to={`/admin/order-list`}><FontAwesomeIcon icon={faPerson} className={'mr-1'} /> Orders</Link>
+              </li>
 
               <li className="has-submenu">
                   <a href="#"><FontAwesomeIcon icon={faBoxesStacked} className={'mr-1'} /> Inventory <i
@@ -63,7 +66,8 @@ const AdminNavbar = ({userDetail}) => {
                   <ul className="submenu megamenu">
                       <li>
                           <ul>
-                              <li><Link to={'/admin/cash-flows'}>Cash FLow</Link></li>
+                              <li><Link to={'/admin/expenses'}>Expenses</Link></li>
+                              <li><Link to={'/admin/cash-flows'}>Cash FLow History</Link></li>
                           </ul>
                       </li>
                   </ul>

@@ -53,3 +53,8 @@ export const tableSchema = Yup.object({
     tableSpace: Yup.number().min(1).required('Table space is required'),
     status: Yup.string().required('Status is required')
 })
+
+export const expenseSchema = Yup.object({
+    name: Yup.string().min(2).required('Expense name is required'),
+    value: Yup.number().min(1).required('Expense value is required').positive().integer().typeError('Expense value should be positive number'),
+})

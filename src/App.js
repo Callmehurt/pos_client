@@ -29,6 +29,8 @@ import StaffAppLayout from "./components/common/StaffAppLayout";
 import Staffs from "./components/admin/Staffs";
 import Tables from "./components/admin/Tables";
 import CashFlow from "./components/admin/CashFlow";
+import Expenses from "./components/admin/Expenses";
+import Orders from "./components/admin/Orders";
 
 function App() {
   return (
@@ -72,6 +74,10 @@ function App() {
 
 
                         <Route exact path={'/admin/cash-flows'} element={<CashFlow/>} />
+                        <Route exact path={'/admin/expenses'} element={<Expenses/>} />
+
+
+                        <Route exact path={'/admin/order-list'} element={<Orders/>} />
 
 
                         <Route exact path={'/admin/table-list'} element={<Tables/>} />

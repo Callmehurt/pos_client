@@ -1,9 +1,11 @@
 import {Modal} from "react-bootstrap";
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faDeleteLeft, faShare} from "@fortawesome/free-solid-svg-icons";
 import {notifyError, notifySuccess} from "../../../toastNotification";
 import useAxiosPrivate from "../../../../hooks/useAxiosPrivate";
+import {Receipt} from "../../../admin/orders/Receipt";
+import {useReactToPrint} from "react-to-print";
 
 const OrderPaymentModal = ({show, setShow, calculation, setCalculation, resetPos}) => {
 
@@ -59,7 +61,6 @@ const OrderPaymentModal = ({show, setShow, calculation, setCalculation, resetPos
     const [confirmShow, setConfirmShow] = useState(false);
 
     const confirmPayment = async () => {
-        console.log('clicked')
         const newCalculation = {...calculation};
         if(paymentType === 'full'){
             if(calculation.calculationType === 'old' && calculation.partialPaidAmount > 0){
@@ -73,7 +74,6 @@ const OrderPaymentModal = ({show, setShow, calculation, setCalculation, resetPos
                 newCalculation.prevPartial = true
             }
             newCalculation['partialPayment'] = false;
-            console.log(newCalculation)
         }else {
             if(parseInt(paidAmount) === 0){
                 notifyError('Paid amount cannot be zero');
@@ -92,6 +92,9 @@ const OrderPaymentModal = ({show, setShow, calculation, setCalculation, resetPos
         try {
             const res = await privateAxios.post('/setup/order', newCalculation);
             if(res.status === 200){
+                if(res.data.order.orderStatus === 'complete'){
+                    setSelectedOrder(res.data.order)
+                }
                 notifySuccess(res.data.message);
                 resetPos();
                 setPaidAmount(0)
@@ -118,9 +121,13 @@ const OrderPaymentModal = ({show, setShow, calculation, setCalculation, resetPos
         if(calculation.calculationType === 'old' && calculation.partialPayment){
             newCalculation.prevPartial = true
         }
+
         try {
             const res = await privateAxios.post('/setup/order', newCalculation);
             if (res.status === 200) {
+                if(res.data.order.orderStatus === 'complete'){
+                    setSelectedOrder(res.data.order)
+                }
                 notifySuccess(res.data.message);
                 resetPos();
                 setPaidAmount(0)
@@ -137,9 +144,27 @@ const OrderPaymentModal = ({show, setShow, calculation, setCalculation, resetPos
         }
     }
 
+    const [selectedOrder, setSelectedOrder] = useState({});
+
+    const componentRef = useRef();
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+        onAfterPrint: () => setSelectedOrder({})
+    });
+
+    useEffect(() => {
+            if(Object.keys(selectedOrder).length !== 0){
+                handlePrint();
+            }
+        }, [selectedOrder])
+
     return (
         <>
-        <Modal show={confirmShow} onHide={() => setConfirmShow(false)} keyboard={false} backdrop={'static'} centered>
+            {
+                Object.keys(selectedOrder).length > 0 ? <Receipt selectedOrder={selectedOrder} ref={componentRef}/> : ''
+
+            }
+            <Modal show={confirmShow} onHide={() => setConfirmShow(false)} keyboard={false} backdrop={'static'} centered>
             <Modal.Header>
                 <h5 className="modal-title mt-0">{paymentType === 'full' ? 'Full': 'Partial'} Payment Confirmation</h5>
             </Modal.Header>

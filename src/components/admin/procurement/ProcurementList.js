@@ -106,25 +106,24 @@ const ProcurementList = () => {
             cell: row => (
                 <>
                     <ul className="navbar-right ml-auto list-inline float-right mb-0">
-
-                                  <li className="dropdown notification-list list-inline-item">
-                                      <div className="dropdown notification-list nav-pro-img">
-                                          <a className="dropdown-toggle nav-link arrow-none nav-user"
-                                             data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
-                                             aria-expanded="false">
-                                             <button className={'btn btn-sm btn-primary'}>Options..</button>
-                                          </a>
-                                          <div className="dropdown-menu dropdown-menu-right profile-dropdown ">
-                                              {
-                                                  row.deliveryStatus === 'pending' ? (
-                                                      <Link to={`/admin/edit/${row._id}/procurement`} className="dropdown-item" href="#">Edit</Link>
-                                                  ) : ''
-                                              }
-                                              <a className="dropdown-item" href="#">Invoice</a>
-                                              <a className="dropdown-item" href="#" onClick={() => deleteProcurement(row)}>Delete</a>
-                                          </div>
-                                      </div>
-                                  </li>
+                          <li className="dropdown notification-list list-inline-item">
+                              <div className="dropdown notification-list nav-pro-img">
+                                  <a className="dropdown-toggle nav-link arrow-none nav-user"
+                                     data-toggle="dropdown" href="#" role="button" aria-haspopup="false"
+                                     aria-expanded="false">
+                                     <button className={'btn btn-sm btn-primary'}>Options..</button>
+                                  </a>
+                                  <div className="dropdown-menu dropdown-menu-right profile-dropdown ">
+                                      {
+                                          row.deliveryStatus === 'pending' ? (
+                                              <Link to={`/admin/edit/${row._id}/procurement`} className="dropdown-item" href="#">Edit</Link>
+                                          ) : ''
+                                      }
+                                      <a className="dropdown-item" href="#">Invoice</a>
+                                      <a className="dropdown-item" href="#" onClick={() => deleteProcurement(row)}>Delete</a>
+                                  </div>
+                              </div>
+                          </li>
                     </ul>
                 </>
             )

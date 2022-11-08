@@ -287,7 +287,7 @@ const PosMain = () => {
     }
 
     const setupNewOrder = async () => {
-        try {
+        try{
             const res = await axiosPrivate.post('/setup/order', calculation);
             if(res.status === 200){
                 notifySuccess(res.data.message);

@@ -1,36 +1,36 @@
 import React, {useEffect, useRef} from "react";
-import CashFLowList from "./cashFlow/CashFlowList";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import {useDispatch} from "react-redux";
-import {fetchCashFlows} from "../../redux/actions/cashFlowAction";
+import {fetchAllOrders} from "../../redux/actions/orderAction";
+import OrderList from "./orders/OrderList";
 
-
-const CashFlow = () => {
+const Orders = () => {
 
     const axiosPrivate = useAxiosPrivate();
     const dispatch = useDispatch();
+
 
     const effectRun = useRef(false);
     useEffect(() => {
         const abortController = new AbortController();
 
-        const getProviderData = async () => {
-            const res = await axiosPrivate.get('/admin/fetch/cash-flows', {
+        const getAllOrders = async () => {
+            const res = await axiosPrivate.get('/fetch/all/orders', {
                 signal: abortController.signal
-            })
-            dispatch(fetchCashFlows(res.data))
+            });
+            dispatch(fetchAllOrders(res.data));
         }
 
         if(effectRun.current){
-            getProviderData();
+            getAllOrders();
         }
 
         return () => {
             effectRun.current = true;
             abortController.abort();
         }
-    }, []);
 
+    }, [])
 
     return (
         <>
@@ -38,7 +38,7 @@ const CashFlow = () => {
               <div className="row align-items-center">
                   <div className="col-sm-12">
                       <ol className="breadcrumb float-right">
-                          <li className="breadcrumb-item active">Cash Flow</li>
+                          <li className="breadcrumb-item active">Orders</li>
                       </ol>
                   </div>
               </div>
@@ -48,7 +48,7 @@ const CashFlow = () => {
               <div className="col-lg-12">
                   <div className="card m-b-30">
                         <div className="card-body">
-                            <CashFLowList/>
+                            <OrderList/>
                         </div>
                     </div>
               </div>
@@ -57,4 +57,4 @@ const CashFlow = () => {
     )
 }
 
-export default CashFlow;
+export default Orders;

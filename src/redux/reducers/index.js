@@ -11,6 +11,8 @@ import {procurementReducer} from "./procurementReducer";
 import {staffReducer} from "./staffReducer";
 import {tableReducer} from "./tableReducer";
 import {cashFlowReducer} from "./cashFlowReducer";
+import {expensesReducer} from "./expensesReducer";
+import {orderReducer} from "./orderReducer";
 
 const reducers = combineReducers({
     authentication: authReducer,
@@ -24,7 +26,9 @@ const reducers = combineReducers({
     procurements: procurementReducer,
     staffs: staffReducer,
     tables: tableReducer,
-    cashFlows: cashFlowReducer
+    cashFlows: cashFlowReducer,
+    expenses: expensesReducer,
+    orderList: orderReducer
 });
 
 export default reducers;
