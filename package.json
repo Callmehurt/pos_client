@@ -28,6 +28,7 @@
     "react-to-pdf": "^0.0.14",
     "react-to-print": "^2.14.8",
     "react-toastify": "^9.0.8",
+    "recharts": "^2.1.16",
     "redux-thunk": "^2.4.1",
     "use-debounce": "^8.0.4",
     "web-vitals": "^2.1.4",

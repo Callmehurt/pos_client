@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useEffect, useRef, useState} from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import {useNavigate, useLocation} from "react-router-dom";
-import {useSelector} from "react-redux";
+import ProfitChart from "./dashboard/ProfitChart";
 
 const Dashboard = () => {
 
@@ -9,7 +9,7 @@ const Dashboard = () => {
     const location = useLocation();
     const axiosPrivate = useAxiosPrivate();
 
-    const userDetail = useSelector((state) => state.authentication.user)
+    const [orderTotal, setOrderTotal] = useState([]);
 
     const testCall = async () => {
         try{
@@ -20,6 +20,34 @@ const Dashboard = () => {
             navigate('/user/login', {state: {from: location}, replace: true})
         }
     }
+
+
+    const effectRun = useRef(false);
+    useEffect(() => {
+
+        const abortController = new AbortController();
+        const fetchOrderTotal = async () => {
+            try{
+                const response = await axiosPrivate.get('/fetch/order-total', {
+                    signal: abortController.signal
+                });
+                const result = await response.data.slice().reverse();
+                setOrderTotal(result)
+            }catch (e) {
+                console.log(e);
+            }
+        }
+
+        if(effectRun.current){
+            fetchOrderTotal();
+        }
+
+        return () => {
+            effectRun.current = true;
+            abortController.abort();
+        }
+
+    }, [])
 
   return (
       <>
@@ -34,8 +62,22 @@ const Dashboard = () => {
           </div>
 
           <div className="row">
-              <div className="col-lg-12">
-                  <h1>{userDetail.username}</h1>
+              <div className="col-xl-8">
+                  <div className="card m-b-30">
+                      <div className="card-body">
+                          <h4 className="mt-0 header-title mb-4">Order Record Chart</h4>
+                          <ProfitChart data={orderTotal}/>
+                      </div>
+                  </div>
+              </div>
+
+              <div className="col-xl-4">
+                  <div className="card m-b-30">
+                      <div className="card-body">
+                          <h4 className="mt-0 header-title mb-4">Donut Chart</h4>
+
+                      </div>
+                  </div>
               </div>
           </div>
       </>

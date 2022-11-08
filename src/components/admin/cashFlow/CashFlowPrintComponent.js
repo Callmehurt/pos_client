@@ -73,7 +73,7 @@ export const CashFlowPrintComponent = React.forwardRef((props, ref) => {
                     {getPageMargins()}
                     {getTableStyle()}
                 </style>
-                <div style={{padding: '10px'}}>
+                <div>
                     <table>
                         <thead>
                         <tr>

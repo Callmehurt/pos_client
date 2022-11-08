@@ -4,7 +4,6 @@ export const OrderListPrintComponent = React.forwardRef((props, ref) => {
 
     const getTableStyle = () => {
         return `
-        
         @media print {
           html, body {
             height: initial !important;
@@ -64,11 +63,11 @@ export const OrderListPrintComponent = React.forwardRef((props, ref) => {
 
     return (
         <>
-            <div ref={ref} style={{overFlow: 'hidden', height: '0'}}>
-                <style type="text/css" media="print">
+            <div ref={ref} style={{height: '0px', overFlow: 'hidden'}}>
+                <style type="text/css">
                     {getTableStyle()}
                 </style>
-                <div style={{margin: '10px'}}>
+                <div>
                     <table>
                         <thead>
                         <tr>

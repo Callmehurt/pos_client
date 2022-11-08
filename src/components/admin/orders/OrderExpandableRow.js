@@ -17,7 +17,7 @@ const OrderExpandableRow = ({data}) => {
                 <p style={{lineHeight: '10px', textTransform: 'capitalize'}}><strong>Paid Amount: </strong>Rs. {data.paidAmount}</p>
                 <p style={{lineHeight: '10px', textTransform: 'capitalize'}}><strong>Change Amount: </strong>Rs. {data.changeAmount}</p>
 
-                <table className={'table-bordered table-striped'} style={{minWidth: '40%'}}>
+                <table className={'table-bordered table-striped'} style={{maxWidth: '40%'}}>
                     <thead>
                     <tr>
                         <th>Product Name</th>

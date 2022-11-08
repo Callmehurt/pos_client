@@ -228,19 +228,31 @@ const OrderList = () => {
         }, [selectedOrder])
 
 
-        const printRef = useRef();
+        const printRef = useRef(null);
         const handleOrderPrint = useReactToPrint({
             content: () => printRef.current,
+            onAfterPrint: () => setOrders([])
         });
+
+        const [orders, setOrders] = useState([]);
+
+         useEffect(() => {
+            if(Object.keys(orders).length !== 0){
+                handleOrderPrint();
+            }
+        }, [orders])
+
+        const printOrders = () => {
+             setOrders(orderList);
+        }
 
 
     return (
         <>
             {
                 Object.keys(selectedOrder).length > 0 ? <Receipt selectedOrder={selectedOrder} ref={componentRef}/> : ''
-
             }
-            <OrderListPrintComponent ref={printRef} orders={orderList}/>
+            <OrderListPrintComponent ref={printRef} orders={orders}/>
             <DataTable
                 title={'Orders List'}
                 columns={columns}
@@ -259,7 +271,7 @@ const OrderList = () => {
                 subHeader={true}
                 subHeaderComponent={
                 <div className="dataTables_filter">
-                    <button onClick={handleOrderPrint} style={{position: 'absolute', left: '15px'}} className={'btn btn-primary'}>
+                    <button onClick={printOrders} style={{position: 'absolute', left: '15px'}} className={'btn btn-primary'}>
                         <FontAwesomeIcon icon={faDownload} className={'mr-1'}/>Download</button>
                     <label>
                         <input type="search"
