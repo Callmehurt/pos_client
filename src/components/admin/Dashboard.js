@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import {useNavigate, useLocation} from "react-router-dom";
 import ProfitChart from "./dashboard/ProfitChart";
+import DebitCreditChart from "./dashboard/DebitCreditChart";
 
 const Dashboard = () => {
 
@@ -10,6 +11,7 @@ const Dashboard = () => {
     const axiosPrivate = useAxiosPrivate();
 
     const [orderTotal, setOrderTotal] = useState([]);
+    const [debitCredit, setDebitCredit] = useState([]);
 
     const testCall = async () => {
         try{
@@ -38,8 +40,21 @@ const Dashboard = () => {
             }
         }
 
+        const fetchDebitCredit = async () => {
+            try{
+                const response = await axiosPrivate.get('/fetch/debit-credit', {
+                    signal: abortController.signal
+                });
+                const result = await response.data.slice().reverse();
+                setDebitCredit(result)
+            }catch (e) {
+                console.log(e);
+            }
+        }
+
         if(effectRun.current){
             fetchOrderTotal();
+            fetchDebitCredit();
         }
 
         return () => {
@@ -62,20 +77,20 @@ const Dashboard = () => {
           </div>
 
           <div className="row">
-              <div className="col-xl-8">
+              <div className="col-xl-12">
                   <div className="card m-b-30">
                       <div className="card-body">
-                          <h4 className="mt-0 header-title mb-4">Order Record Chart</h4>
+                          <h4 className="mt-0 header-title mb-4">Sales Chart</h4>
                           <ProfitChart data={orderTotal}/>
                       </div>
                   </div>
               </div>
 
-              <div className="col-xl-4">
+              <div className="col-xl-12">
                   <div className="card m-b-30">
                       <div className="card-body">
                           <h4 className="mt-0 header-title mb-4">Donut Chart</h4>
-
+                          <DebitCreditChart data={debitCredit}/>
                       </div>
                   </div>
               </div>

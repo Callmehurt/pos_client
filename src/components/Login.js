@@ -54,6 +54,7 @@ const Login = () => {
             setIsLoading(false)
             navigate(from, {replace: true});
         }).catch((err) => {
+            console.log(err)
             console.log(err.response.data.message)
             setErrMsg(err.response.data.message)
             setIsLoading(false)

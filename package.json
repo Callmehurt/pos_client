@@ -1,5 +1,6 @@
 {
   "name": "client2.0",
+  "homepage": "http://pos.backend.deliverysansar.com/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

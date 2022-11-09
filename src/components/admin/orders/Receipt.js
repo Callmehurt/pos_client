@@ -40,7 +40,7 @@ export const Receipt = React.forwardRef((props, ref) => {
 
     return (
         <>
-            <div ref={ref} style={{overFlow: 'hidden',height: '0'}}>
+            <div ref={ref} style={{overFlow: 'hidden', height: '0'}}>
                 <style type="text/css">
                     {styles()}
                 </style>

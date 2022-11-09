@@ -17,47 +17,31 @@ export const OrderListPrintComponent = React.forwardRef((props, ref) => {
           margin: 5mm;
         }
                 
-        table, td, th {
-        border: 1px solid black;
-        font-family: Roboto, Helvetica, Arial, sans-serif;
-    }
+        #order-table, td, th {
+            border: 1px solid black;
+            font-family: Roboto, Helvetica, Arial, sans-serif;
+        }
 
-    thead tr th{
+    #order-table thead tr th{
         padding: 5px;
         font-family: Roboto, Helvetica, Arial, sans-serif;
         text-align: center;
     }
 
-    tbody tr td{
+    #order-table tbody tr td{
         padding-left: 5px;
         font-family: Roboto, Helvetica, Arial, sans-serif;
     }
 
-    table {
+    #order-table {
         width: 100%;
         border-collapse: collapse;
     }
 
-    thead{
+    #order-table thead{
         background: gainsboro;
     }
 
-    .table-top-head{
-        text-align: center;
-        height: 35px;
-        width: 170px;
-        position: absolute;
-        left: 0;
-        right: 0;
-        margin: 0 auto;
-        display: grid;
-        place-items: center;
-        border: 1px solid gainsboro;
-        color: black;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-        border-bottom: none;
-    }
         `
     }
 
@@ -67,8 +51,8 @@ export const OrderListPrintComponent = React.forwardRef((props, ref) => {
                 <style type="text/css">
                     {getTableStyle()}
                 </style>
-                <div>
-                    <table>
+                <div className={'order-print'}>
+                    <table id={'order-table'}>
                         <thead>
                         <tr>
                             <th>Code</th>

@@ -249,10 +249,10 @@ const OrderList = () => {
 
     return (
         <>
+            {/*<OrderListPrintComponent ref={printRef} orders={orders}/>*/}
             {
                 Object.keys(selectedOrder).length > 0 ? <Receipt selectedOrder={selectedOrder} ref={componentRef}/> : ''
             }
-            <OrderListPrintComponent ref={printRef} orders={orders}/>
             <DataTable
                 title={'Orders List'}
                 columns={columns}
